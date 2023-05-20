@@ -1,10 +1,11 @@
+const env = require('../config/env.js');
 const express = require('express');
 const router = express.Router();
 var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
-var secret = 'harrypotter';
+var secret = env.app_secret;
 var nodemailer = require('nodemailer');
-const db=require('../db/config_vsamm');
+const db=require('../db/config');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const Speakeasy = require("speakeasy");

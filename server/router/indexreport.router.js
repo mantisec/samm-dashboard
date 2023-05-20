@@ -5,7 +5,7 @@ const q = require("q");
 const json2xls = require("json2xls");
 //const ctrlUser = require('../controllers/user.controller');
 require("nodemailer");
-const db = require("../db/config_vsamm");
+const db = require("../db/config");
 require("jsonwebtoken");
 const fs = require("fs");
 require("speakeasy");

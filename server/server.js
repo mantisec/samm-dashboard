@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var db=require('./db/config');
-//var db1=require('./db/config_vsamm');
 const rtsIndex = require('./router/index.router');
 const bodyParser = require('body-parser');
 const cors = require('cors');
