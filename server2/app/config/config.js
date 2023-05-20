@@ -1,4 +1,5 @@
+const env = require('./env.js');
 module.exports = {
-  'secret': 'grokonez-super-secret-key',
+  'secret': env.app_secret,
   ROLEs: ['USER', 'ADMIN', 'AUDITOR']
 };
