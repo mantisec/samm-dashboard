@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -16,17 +16,17 @@ const spawn = require("child_process").spawn;
 
 router.get('/info_mdis_secondgraph',function(req,res){
   function mdis_1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  information_mdis where compliance_section = 'A.5.1.1-Policies for information security' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function mdis_2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  information_mdis where compliance_section = 'A.5.1.2-Review of the policies for information security' ",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([mdis_1(),mdis_2()]).then(function(results){
+  q.all([mdis_1(),mdis_2()]).then(function(results){
 
 
       res.json({success:true,mdis1:results[0][0][0].score,
@@ -37,17 +37,17 @@ router.get('/info_mdis_secondgraph',function(req,res){
 //****************THIRD GRAPH********************* *//
 router.get('/info_mdis_thirdgraph',function(req,res){
   function mdis_yes(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select count(*) as score from  information_mdis  where status = 1  ",defered.makeNodeResolver());
     return defered.promise;
   }
   function mdis_no(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select count(*) as score from  information_mdis  where status = 0  ",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([mdis_yes(),mdis_no()]).then(function(results){
+  q.all([mdis_yes(),mdis_no()]).then(function(results){
 
     mdis_yes = (results[0][0][0].score/10);
     mdis_no = (results[1][0][0].score/10);
@@ -59,12 +59,12 @@ router.get('/info_mdis_thirdgraph',function(req,res){
 router.get('/info_mdis_scores',function(req,res){
   // console.log("hii");
   function fun1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  information_mdis where status!=-1",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([fun1()]).then(function(results){
+  q.all([fun1()]).then(function(results){
     govall = results[0][0][0].score;
     // console.log(govall);
     all = results[0][0][0].total;
@@ -76,17 +76,17 @@ router.get('/info_mdis_scores',function(req,res){
 });
 router.get('/info_mdis_firstgraph',function(req,res){
   function mdis_score(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  information_mdis where status!=-1 ",defered.makeNodeResolver());
     return defered.promise;
   }
   function mdis_total(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select count(*) as total from  information_mdis ",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([mdis_score(), mdis_total()]).then(function(results){
+  q.all([mdis_score(), mdis_total()]).then(function(results){
 
     de = results[0][0][0].score;
 

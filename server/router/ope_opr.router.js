@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -18,45 +18,45 @@ const spawn = require("child_process").spawn;
 router.get('/oprscores',function(req,res){
   // console.log("hii");
 function fun1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_backup where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_cos where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun3(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_isac where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun4(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_lm where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun5(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_opr where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun6(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_tvm where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun7(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_pm where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
+q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
   govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score+results[3][0][0].score+results[4][0][0].score+results[5][0][0].score+results[6][0][0].score;
   // console.log(govall);
   all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total+results[3][0][0].total+results[4][0][0].total+results[5][0][0].total+results[6][0][0].total;

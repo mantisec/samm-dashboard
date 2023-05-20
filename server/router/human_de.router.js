@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -16,22 +16,22 @@ const spawn = require("child_process").spawn;
 
 router.get('/humansecondgraph',function(req,res){
   function pe_1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  human_pe where compliance_section = 'A.7.1.1-Screening' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function pe_2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  human_pe where compliance_section = 'A.7.1.2-Terms and conditions of employment' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function de1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  human_de where compliance_section = 'A.7.2.1-Management responsibilities' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function de2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  human_de where compliance_section = 'A.7.2.2-Information security awareness, education and training'",defered.makeNodeResolver());
     return defered.promise;
   }

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -16,23 +16,23 @@ const spawn = require("child_process").spawn;
 
 router.get('/suppliersecondgraph',function(req,res){
   function sdm_1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  supplier_sdm where compliance_section = 'A.15.2.1-Monitoring and review of supplier services' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function sdm_2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  supplier_sdm where compliance_section = 'A.15.2.2-Managing changes to supplier services' ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function isr_1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  supplier_isr where compliance_section = 'A.15.1.1-Information security policy for supplier relationships' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function isr_2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  supplier_isr where compliance_section = 'A.15.1.2-Addressing security within supplier agreements' ",defered.makeNodeResolver());
     return defered.promise;
   }

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -16,42 +16,42 @@ const spawn = require("child_process").spawn;
 
 router.get('/organisationsecondgraph',function(req,res){
   function mdt_1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_mdt where compliance_section = 'A.6.2.1-Mobile device policy' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function mdt_2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_mdt where compliance_section = 'A.6.2-Teleworking' ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function io_1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_io where compliance_section = 'A.6.1.1-Information security roles and responsibilities' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function io_2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_io where compliance_section = 'A.6.1.2-Segregation of duties' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function io_3(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_io where compliance_section = 'A.6.1.3-Contact with authorities' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function io_4(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_io where compliance_section = 'A.6.1.4-Contact with special interest groups' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function io_5(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  organisation_io where compliance_section = 'A.6.1.5-Information security in project management' ",defered.makeNodeResolver());
     return defered.promise;
   }
-  Q.all([mdt_1(),mdt_2(),
+  q.all([mdt_1(),mdt_2(),
     io_1(),io_2(),io_3(),io_4(),io_5()]).then(function(results){
 
 
@@ -71,7 +71,7 @@ router.get('/organisationsecondgraph',function(req,res){
 //****************THIRD GRAPH********************* *//
 router.get('/organisationthirdgraph',function(req,res){
   function mdt_yes(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select count(*) as score from  organisation_mdt  where status = 1  ",defered.makeNodeResolver());
     return defered.promise;
   }

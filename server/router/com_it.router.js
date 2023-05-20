@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -15,17 +15,17 @@ const  multipartMiddleware  =  multipart({ uploadDir:  './uploads' });
 router.get('/itscores',function(req,res){
   // console.log("hii");
 function fun6(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  communications_it  where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun7(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  communications_nsm  where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([fun6(),fun7()]).then(function(results){
+q.all([fun6(),fun7()]).then(function(results){
   govall = results[0][0][0].score+results[1][0][0].score;
   // console.log(govall);
   all = results[1][0][0].total+results[1][0][0].total;
@@ -41,11 +41,11 @@ router.get('/itfourvalue',function(req,res){
 
 
 function egfunction(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(score) as score, count(*) as total from  score_history where groupname = 'Access Control' ",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([egfunction()]).then(function(results){
+q.all([egfunction()]).then(function(results){
   score = results[0][0][0].score;
   total = results[0][0][0].total;
 egtotalscore = Math.round((score/total)*100);
@@ -59,13 +59,13 @@ egtotalscore = Math.round((score/total)*100);
 router.get('/itfirstvalue',function(req,res){
   // console.log("hii");
 function asset_ic(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  communications_it where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function asset_mh(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from communications_nsm where status!=-1  ",defered.makeNodeResolver());
   return defered.promise;
 }
