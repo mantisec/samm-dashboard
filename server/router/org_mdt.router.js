@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -54,7 +54,7 @@ else if(score=="NA")
     {scname=-1;}
 else if(score=="N/A")
     {scname=-1;}
-  
+
 if(req.body.comment==undefined)
 {
     var c='';

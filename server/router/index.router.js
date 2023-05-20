@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -168,7 +168,7 @@ router.get('/firstgraphvalues', function (req, res)
     //console.log( curr[2]);
     function doQuery_gov_curr0(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Governance' and month(created) = '"+curr[0]+"' ",defered.makeNodeResolver());
       //console.log( defered.promise);
 
@@ -176,7 +176,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_con_curr0(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Construction' and month(created) = '"+curr[0]+"' ",defered.makeNodeResolver());
 
       //  db.query("SELECT "+curr[0]+" as count FROM `history` WHERE `groupname`='Operational and Security Risk Management'",defered.makeNodeResolver());
@@ -185,7 +185,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_ver_curr0(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Verification' and month(created) = '"+curr[0]+"' ",defered.makeNodeResolver());
 
        // db.query("SELECT "+curr[0]+" as count FROM `history` WHERE `groupname`='Third Party Ecosystem'",defered.makeNodeResolver());
@@ -194,7 +194,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_oper_curr0(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Operations' and month(created) = '"+curr[0]+"' ",defered.makeNodeResolver());
 
         //db.query("SELECT "+curr[0]+" as count FROM `history` WHERE `groupname`='Technological Security'",defered.makeNodeResolver());
@@ -203,14 +203,14 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_gov_curr1(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Governance' and month(created) = '"+curr[1]+"' ",defered.makeNodeResolver());
        // console.log( defered.promise);
         return defered.promise;
     }
     function doQuery_con_curr1(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Construction' and month(created) = '"+curr[1]+"' ",defered.makeNodeResolver());
 
         //db.query("SELECT "+curr[1]+" as count FROM `history` WHERE `groupname`='Operational and Security Risk Management'",defered.makeNodeResolver());
@@ -219,7 +219,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_ver_curr1(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Verification' and month(created) = '"+curr[1]+"' ",defered.makeNodeResolver());
 
        // db.query("SELECT "+curr[1]+" as count FROM `history` WHERE `groupname`='Third Party Ecosystem'",defered.makeNodeResolver());
@@ -228,7 +228,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_oper_curr1(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Operations' and month(created) = '"+curr[1]+"' ",defered.makeNodeResolver());
 
       //  db.query("SELECT "+curr[1]+" as count FROM `history` WHERE `groupname`='Technological Security'",defered.makeNodeResolver());
@@ -238,7 +238,7 @@ router.get('/firstgraphvalues', function (req, res)
 
     function doQuery_gov_curr2(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Governance' and month(created) = '"+curr[2]+"' ",defered.makeNodeResolver());
 
         //db.query("SELECT "+curr[2]+" as count FROM `history` WHERE `groupname`='Regulatory Compliance'",defered.makeNodeResolver());
@@ -247,7 +247,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_con_curr2(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Construction' and month(created) = '"+curr[2]+"' ",defered.makeNodeResolver());
 
         //db.query("SELECT "+curr[2]+" as count FROM `history` WHERE `groupname`='Operational and Security Risk Management'",defered.makeNodeResolver());
@@ -256,7 +256,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_ver_curr2(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Verification' and month(created) = '"+curr[2]+"' ",defered.makeNodeResolver());
 
         //db.query("SELECT "+curr[2]+" as count FROM `history` WHERE `groupname`='Third Party Ecosystem'",defered.makeNodeResolver());
@@ -265,7 +265,7 @@ router.get('/firstgraphvalues', function (req, res)
     }
     function doQuery_oper_curr2(){
 
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("SELECT sum(score) as count FROM score_history where `groupname`='Operations' and month(created) = '"+curr[2]+"' ",defered.makeNodeResolver());
 
         //db.query("SELECT "+curr[2]+" as count FROM `history` WHERE `groupname`='Technological Security'",defered.makeNodeResolver());
@@ -273,7 +273,7 @@ router.get('/firstgraphvalues', function (req, res)
         return defered.promise;
     }
 
-    Q.all([ doQuery_gov_curr0(),doQuery_con_curr0(),doQuery_ver_curr0(),doQuery_oper_curr0(),
+    q.all([ doQuery_gov_curr0(),doQuery_con_curr0(),doQuery_ver_curr0(),doQuery_oper_curr0(),
         doQuery_gov_curr1(),doQuery_con_curr1(),doQuery_ver_curr1(),doQuery_oper_curr1(),
         doQuery_gov_curr2(),doQuery_con_curr2(),doQuery_ver_curr2(),doQuery_oper_curr2()]).then(function(results){
         // console.log( 'hi');
@@ -329,19 +329,19 @@ router.get('/values', function (req, res) {
     //Governance
     //console.log('hiiii this');
      function doQuery1(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from governance_sm where project='vSSAMM'",defered.makeNodeResolver());
 
          return defered.promise;
      }
 
      function doQuery2(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from governance_eg where project='vSSAMM'",defered.makeNodeResolver());
          return defered.promise;
      }
      function doQuery3(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from governance_pc where project='vSSAMM'",defered.makeNodeResolver());
 
          return defered.promise;
@@ -349,49 +349,49 @@ router.get('/values', function (req, res) {
 
      //Construction
      function doQuery1_co(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from construction_ta where project='vSSAMM'",defered.makeNodeResolver());
          return defered.promise;
      }
      function doQuery2_co(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from construction_sr where project='vSSAMM'",defered.makeNodeResolver());
          return defered.promise;
      }
      function doQuery3_co(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from construction_sa where project='vSSAMM'",defered.makeNodeResolver());
          return defered.promise;
      }
      //Verification
      function doQuery1_ve(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from verification_dr where project='vSSAMM'",defered.makeNodeResolver());
          return defered.promise;
      }
      function doQuery2_ve(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select SUM(score) as score, count(*) as total  from verification_ir where project='vSSAMM'",defered.makeNodeResolver());
         return defered.promise;
     }
     function doQuery3_ve(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select SUM(score) as score, count(*) as total  from verification_st where project='vSSAMM'",defered.makeNodeResolver());
         return defered.promise;
     }
      //Operations
      function doQuery1_oper(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from operations_im where project='vSSAMM'",defered.makeNodeResolver());
          return defered.promise;
      }
      function doQuery2_oper(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from operations_eh where project='vSSAMM' ",defered.makeNodeResolver());
          return defered.promise;
      }
      function doQuery3_oper(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from operations_oe where project='vSSAMM' ",defered.makeNodeResolver());
          return defered.promise;
      }
@@ -399,7 +399,7 @@ router.get('/values', function (req, res) {
      //governance
      function gdoQuery1(){
         // console.log("I'm Inside graphvalues 1");
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from governance_sm where project='vSSAMM' and score=1",defered.makeNodeResolver());
 
          return defered.promise;
@@ -407,13 +407,13 @@ router.get('/values', function (req, res) {
 
     function gdoQuery2(){
     // console.log("I'm Inside graphvalues 2");
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select SUM(score) as score, count(*) as total  from governance_eg where project='vSSAMM' and score=1",defered.makeNodeResolver());
         return defered.promise;
     }
     function gdoQuery3(){
     //  console.log("I'm Inside graphvalues 3");
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select SUM(score) as score, count(*) as total  from governance_pc where project='vSSAMM' and score=1",defered.makeNodeResolver());
 
         return defered.promise;
@@ -422,7 +422,7 @@ router.get('/values', function (req, res) {
      //Construction
      function gdoQuery1_co(){
          // console.log("I'm Inside graphvalues 1");
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("select SUM(score) as score, count(*) as total  from construction_ta where project='vSSAMM' and score=1",defered.makeNodeResolver());
 
           return defered.promise;
@@ -430,13 +430,13 @@ router.get('/values', function (req, res) {
 
      function gdoQuery2_co(){
      // console.log("I'm Inside graphvalues 2");
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from construction_sr where project='vSSAMM' and score=1",defered.makeNodeResolver());
          return defered.promise;
      }
      function gdoQuery3_co(){
      //  console.log("I'm Inside graphvalues 3");
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total  from construction_sa where project='vSSAMM' and score=1",defered.makeNodeResolver());
 
          return defered.promise;
@@ -447,18 +447,18 @@ router.get('/values', function (req, res) {
      //oper
      function gdoQuery1_oper(){
      //  console.log("I'm Inside graphvalues 6");
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from operations_im where score=1",defered.makeNodeResolver());
          return defered.promise;
      }
      function gdoQuery2_oper(){
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from operations_eh where score=1",defered.makeNodeResolver());
          return defered.promise;
      }
      function gdoQuery3_oper(){
      // console.log("I'm Inside graphvalues 7");
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from operations_oe where score=1",defered.makeNodeResolver());
          return defered.promise;
      }
@@ -467,19 +467,19 @@ router.get('/values', function (req, res) {
      //Verification
      function gdoQuery1_ver()
      {
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from verification_dr where score=1",defered.makeNodeResolver());
          return defered.promise;
      }
      function gdoQuery2_ver()
      {
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from verification_ir where score=1",defered.makeNodeResolver());
          return defered.promise;
      }
      function gdoQuery3_ver()
      {
-         var defered = Q.defer();
+         var defered = q.defer();
          db.query("select SUM(score) as score, count(*) as total from verification_st where score=1",defered.makeNodeResolver());
          return defered.promise;
      }
@@ -487,7 +487,7 @@ router.get('/values', function (req, res) {
 
 
                //0         //1     //2        //3
-     Q.all([doQuery1(),doQuery2(),doQuery3(),
+     q.all([doQuery1(),doQuery2(),doQuery3(),
          doQuery1_co(),doQuery2_co(),doQuery3_co(),
          doQuery1_oper(),doQuery2_oper(),doQuery3_oper(),
          doQuery1_ve(),doQuery2_ve(),doQuery3_ve(),

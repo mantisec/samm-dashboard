@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -19,29 +19,29 @@ const spawn = require("child_process").spawn;
 
 router.get('/access',function(req,res){
   function fun1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  access_brac where status = 1",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  access_sac where status = 1 ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun3(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  access_uam where status = 1",defered.makeNodeResolver());
     return defered.promise;
   }
   function fun4(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  access_ur where status = 1",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([fun1(),fun2(),fun3(),fun4()]).then(function(results){
+  q.all([fun1(),fun2(),fun3(),fun4()]).then(function(results){
     govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score+results[3][0][0].score;
     // console.log(govall);
     all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total+results[3][0][0].total;
@@ -53,24 +53,24 @@ router.get('/access',function(req,res){
   // Asset management
   router.get('/asset',function(req,res){
     function fun1(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `asset_ic` where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
 
     function fun2(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `asset_mh` where status = 1 ",defered.makeNodeResolver());
       return defered.promise;
     }
 
     function fun3(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `asset_ra` where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
 
-    Q.all([fun1(),fun2(),fun3()]).then(function(results){
+    q.all([fun1(),fun2(),fun3()]).then(function(results){
       govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score;
       // console.log(govall);
       all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total;
@@ -84,18 +84,18 @@ router.get('/access',function(req,res){
 
     router.get('/comm',function(req,res){
       function fun1(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from   `communications_it`  where status = 1",defered.makeNodeResolver());
         return defered.promise;
       }
 
       function fun2(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from    `communications_nsm`   where status = 1 ",defered.makeNodeResolver());
         return defered.promise;
       }
 
-      Q.all([fun1(),fun2()]).then(function(results){
+      q.all([fun1(),fun2()]).then(function(results){
         govall = results[0][0][0].score+results[1][0][0].score;
         // console.log(govall);
         all = results[0][0][0].total+results[1][0][0].total;
@@ -109,18 +109,18 @@ router.get('/access',function(req,res){
 
       router.get('/comp',function(req,res){
         function fun1(){
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("select sum(status) as score, count(*) as total from   `compliance_isr`   where status = 1",defered.makeNodeResolver());
           return defered.promise;
         }
 
         function fun2(){
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("select sum(status) as score, count(*) as total from  `compliance_lcr`   where status = 1 ",defered.makeNodeResolver());
           return defered.promise;
         }
 
-        Q.all([fun1(),fun2()]).then(function(results){
+        q.all([fun1(),fun2()]).then(function(results){
           govall = results[0][0][0].score+results[1][0][0].score;
           // console.log(govall);
           all = results[0][0][0].total+results[1][0][0].total;
@@ -134,12 +134,12 @@ router.get('/access',function(req,res){
 
       router.get('/crypto',function(req,res){
         function fun1(){
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("select sum(status) as score, count(*) as total from   `cryptography_con`   where status = 1",defered.makeNodeResolver());
           return defered.promise;
         }
 
-        Q.all([fun1()]).then(function(results){
+        q.all([fun1()]).then(function(results){
           govall = results[0][0][0].score;
           // console.log(govall);
           all = results[0][0][0].totall;
@@ -153,18 +153,18 @@ router.get('/access',function(req,res){
 
 router.get('/human',function(req,res){
   function fun1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from   `human_de`   where status = 1",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  `human_pe`   where status = 1 ",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([fun1(),fun2()]).then(function(results){
+  q.all([fun1(),fun2()]).then(function(results){
     govall = results[0][0][0].score+results[1][0][0].score;
     // console.log(govall);
     all = results[0][0][0].total+results[1][0][0].total;
@@ -178,12 +178,12 @@ router.get('/human',function(req,res){
 
         router.get('/mis',function(req,res){
           function fun1(){
-            var defered = Q.defer();
+            var defered = q.defer();
             db.query("select sum(status) as score, count(*) as total from   `information_mis` where status = 1",defered.makeNodeResolver());
             return defered.promise;
           }
 
-          Q.all([fun1()]).then(function(results){
+          q.all([fun1()]).then(function(results){
             govall = results[0][0][0].score;
             // console.log(govall);
             all = results[0][0][0].totall;
@@ -197,18 +197,18 @@ router.get('/human',function(req,res){
 
   router.get('/isecurity',function(req,res){
     function fun1(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from   `isecurity_isc`    where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
 
     function fun2(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from `isecurity_red`    where status = 1 ",defered.makeNodeResolver());
       return defered.promise;
     }
 
-    Q.all([fun1(),fun2()]).then(function(results){
+    q.all([fun1(),fun2()]).then(function(results){
       govall = results[0][0][0].score+results[1][0][0].score;
       // console.log(govall);
       all = results[0][0][0].total+results[1][0][0].total;
@@ -223,12 +223,12 @@ router.get('/human',function(req,res){
 
 router.get('/mdis',function(req,res){
   function fun1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from   information_mdis   where status = 1",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([fun1()]).then(function(results){
+  q.all([fun1()]).then(function(results){
     govall = results[0][0][0].score;
     // console.log(govall);
     all = results[0][0][0].totall;
@@ -242,44 +242,44 @@ router.get('/mdis',function(req,res){
 
   router.get('/ope',function(req,res){
     function fun1(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_backup`  where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
 
     function fun2(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_cos`  where status = 1 ",defered.makeNodeResolver());
       return defered.promise;
     }
 
     function fun3(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_isac`  where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
     function fun4(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_lm`  where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
     function fun5(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_opr`  where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
     function fun6(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_pm`  where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
     function fun7(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("select sum(status) as score, count(*) as total from  `operations_tvm`  where status = 1",defered.makeNodeResolver());
       return defered.promise;
     }
 
-    Q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
+    q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
       govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score+results[3][0][0].score+result[4][0][0].score+result[5][0][0].score+result[6][0][0].score;
       // console.log(govall);
       all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total+results[3][0][0].total+result[4][0][0].total+result[5][0][0].total+result[6][0][0].total;
@@ -293,18 +293,18 @@ router.get('/mdis',function(req,res){
 
     router.get('/org',function(req,res){
       function fun1(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from   `organisation_io` where status = 1",defered.makeNodeResolver());
         return defered.promise;
       }
 
       function fun2(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from `organisation_mdt` where status = 1 ",defered.makeNodeResolver());
         return defered.promise;
       }
 
-      Q.all([fun1(),fun2()]).then(function(results){
+      q.all([fun1(),fun2()]).then(function(results){
         govall = results[0][0][0].score+results[1][0][0].score;
         // console.log(govall);
         all = results[0][0][0].total+results[1][0][0].total;
@@ -318,18 +318,18 @@ router.get('/mdis',function(req,res){
 
       router.get('/phy',function(req,res){
         function fun1(){
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("select sum(status) as score, count(*) as total from   `physical_equ` where status = 1",defered.makeNodeResolver());
           return defered.promise;
         }
 
         function fun2(){
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("select sum(status) as score, count(*) as total from `physical_sa` where status = 1 ",defered.makeNodeResolver());
           return defered.promise;
         }
 
-        Q.all([fun1(),fun2()]).then(function(results){
+        q.all([fun1(),fun2()]).then(function(results){
           govall = results[0][0][0].score+results[1][0][0].score;
           // console.log(govall);
           all = results[0][0][0].total+results[1][0][0].total;
@@ -343,18 +343,18 @@ router.get('/mdis',function(req,res){
 
     router.get('/sup',function(req,res){
       function fun1(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from   supplier_sdm where status = 1",defered.makeNodeResolver());
         return defered.promise;
       }
 
       function fun2(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from supplier_isr where status = 1 ",defered.makeNodeResolver());
         return defered.promise;
       }
 
-      Q.all([fun1(),fun2()]).then(function(results){
+      q.all([fun1(),fun2()]).then(function(results){
         govall = results[0][0][0].score+results[1][0][0].score;
         // console.log(govall);
         all = results[0][0][0].total+results[1][0][0].total;
@@ -368,28 +368,28 @@ router.get('/mdis',function(req,res){
 
     router.get('/sys',function(req,res){
       function fun1(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from   `system_sdsp`  where status = 1",defered.makeNodeResolver());
         return defered.promise;
       }
 
       function fun2(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from `system_sris`  where status = 1 ",defered.makeNodeResolver());
         return defered.promise;
       }
       function fun3(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from   `system_sdm`  where status = 1",defered.makeNodeResolver());
         return defered.promise;
       }
 
       function fun4(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select sum(status) as score, count(*) as total from `system_td`  where status = 1 ",defered.makeNodeResolver());
         return defered.promise;
       }
-      Q.all([fun1(),fun2(),fun3(),fun4()]).then(function(results){
+      q.all([fun1(),fun2(),fun3(),fun4()]).then(function(results){
         govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score+results[3][0][0].score;
         // console.log(govall);
         all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total+results[3][0][0].total;
@@ -492,7 +492,7 @@ router.get('/mdis',function(req,res){
      // ---------------------------------------------------------   hours -----------------------------------------//
      router.get('/hours',function(req,res){
       function fun1(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Access Control' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -500,14 +500,14 @@ router.get('/mdis',function(req,res){
       }
 
       function fun2(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Information Security Policies ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
       function fun3(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Organisation of information security        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -515,14 +515,14 @@ router.get('/mdis',function(req,res){
       }
 
       function fun4(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Human resources security        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
       function fun5(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Asset management        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -530,14 +530,14 @@ router.get('/mdis',function(req,res){
       }
 
       function fun6(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Cryptography        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
       function fun7(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Physical and environmental security        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -545,14 +545,14 @@ router.get('/mdis',function(req,res){
       }
 
       function fun8(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Operations security        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
       function fun9(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Communications security        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -560,14 +560,14 @@ router.get('/mdis',function(req,res){
       }
 
       function fun10(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'System acquisition, development and maintenance        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
       function fun11(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Supplier relationships        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -575,14 +575,14 @@ router.get('/mdis',function(req,res){
       }
 
       function fun12(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Information security incident management  ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
       function fun13(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Information security aspects of business continuity management  ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql,defered.makeNodeResolver());
@@ -590,13 +590,13 @@ router.get('/mdis',function(req,res){
       }
 
       function fun14(){
-        var defered = Q.defer();
+        var defered = q.defer();
         sql2="SELECT sum(DATE_FORMAT(created, '%H'))  as `time` from score_history where groupname = 'Compliance        ' and created <= Date_sub(now(),interval 1 hour) ";
 
         db.query(sql2,defered.makeNodeResolver());
         return defered.promise;
       }
-      Q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7(),fun8(),fun9(),fun10(),fun11(),fun12(),fun13(),fun14()]).then(function(results){
+      q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7(),fun8(),fun9(),fun10(),fun11(),fun12(),fun13(),fun14()]).then(function(results){
          access = results[0][0][0].time;
          info = results[1][0][0].time;
          org = results[2][0][0].time;
@@ -620,21 +620,21 @@ router.get('/mdis',function(req,res){
 
       router.get('/persentage',function(req,res){
         function fun1(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score from score_history where groupname = 'Access Control' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun2(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score from score_history where groupname = 'Information Security Policies ' and YEAR(created) ";
 
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun3(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score from score_history where groupname = 'Organisation of information security        ' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
@@ -642,14 +642,14 @@ router.get('/mdis',function(req,res){
         }
 
         function fun4(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score from score_history where groupname = 'Human resources security        ' and YEAR(created) ";
 
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun5(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score from score_history  where groupname = 'Asset management        ' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
@@ -657,14 +657,14 @@ router.get('/mdis',function(req,res){
         }
 
         function fun6(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score from score_history  where groupname = 'Cryptography  ' and YEAR(created) ";
            //console.log(sql2);
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun7(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score from score_history where groupname = 'Physical and environmental security ' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
@@ -672,14 +672,14 @@ router.get('/mdis',function(req,res){
         }
 
         function fun8(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score from score_history where groupname = 'Operations security  ' and YEAR(created) ";
 
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun9(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score  from score_history where groupname = 'Communications security   ' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
@@ -687,14 +687,14 @@ router.get('/mdis',function(req,res){
         }
 
         function fun10(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score from score_history  where groupname = 'System acquisition, development and maintenance  ' and YEAR(created) ";
 
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun11(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score from score_history where groupname = 'Supplier relationships' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
@@ -702,14 +702,14 @@ router.get('/mdis',function(req,res){
         }
 
         function fun12(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score  from score_history where groupname = 'Information security incident management  ' and YEAR(created) ";
 
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
         function fun13(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql="SELECT sum(score)  as score from score_history where groupname = 'Information security aspects of business continuity management  ' and YEAR(created) ";
 
           db.query(sql,defered.makeNodeResolver());
@@ -717,13 +717,13 @@ router.get('/mdis',function(req,res){
         }
 
         function fun14(){
-          var defered = Q.defer();
+          var defered = q.defer();
           sql2="SELECT sum(score)  as score from score_history  where groupname = 'Compliance' and YEAR(created) ";
 
           db.query(sql2,defered.makeNodeResolver());
           return defered.promise;
         }
-        Q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7(),fun8(),fun9(),fun10(),fun11(),fun12(),fun13(),fun14()]).then(function(results){
+        q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7(),fun8(),fun9(),fun10(),fun11(),fun12(),fun13(),fun14()]).then(function(results){
           access = Math.round(results[0][0][0].score);
           info = Math.round(results[1][0][0].score);
           org = Math.round(results[2][0][0].score);

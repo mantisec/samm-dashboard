@@ -1,7 +1,7 @@
 const moment = require('moment');
 const express = require("express");
 const router = express.Router();
-const Q = require("Q");
+const q = require("q");
 const json2xls = require("json2xls");
 //const ctrlUser = require('../controllers/user.controller');
 require("nodemailer");
@@ -12,7 +12,7 @@ require("speakeasy");
 router.get("/filter", function (req, res) {
   // console.log("hii");
   function fun1() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       "SELECT * FROM `score_history` WHERE uname = 'Auditor'  ORDER BY id ASC",
       defered.makeNodeResolver()
@@ -20,7 +20,7 @@ router.get("/filter", function (req, res) {
     return defered.promise;
   }
 
-  Q.all([fun1()]).then(function (results) {
+  q.all([fun1()]).then(function (results) {
     alldata = results[0][0];
 
     res.json({success: true, data: alldata});
@@ -304,13 +304,13 @@ router.get("/reportPdf_re", function (req, res, next) {
   let operate_operational1 = "SELECT count(*) as count FROM `operate_operational` WHERE status=1"
 
   function SQLQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(sql, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_strategyQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       governance_strategy,
       defered.makeNodeResolver()
@@ -319,7 +319,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function governance_policyQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       governance_policy,
       defered.makeNodeResolver()
@@ -328,7 +328,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function governance_educationQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       governance_education,
       defered.makeNodeResolver()
@@ -337,7 +337,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function design_securityQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       design_security,
       defered.makeNodeResolver()
@@ -346,7 +346,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function design_secure_archQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       design_secure_arch,
       defered.makeNodeResolver()
@@ -355,7 +355,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function design_threatQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       design_threat,
       defered.makeNodeResolver()
@@ -364,7 +364,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function implement_secure_buildQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       implement_secure_build,
       defered.makeNodeResolver()
@@ -373,7 +373,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function implement_secure_deployQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       implement_secure_deploy,
       defered.makeNodeResolver()
@@ -382,7 +382,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function implement_defectQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       implement_defect,
       defered.makeNodeResolver()
@@ -391,7 +391,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function verify_archQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       verify_arch,
       defered.makeNodeResolver()
@@ -400,7 +400,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function verify_requirementQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       verify_requirement,
       defered.makeNodeResolver()
@@ -409,7 +409,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function verify_securityQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       verify_security,
       defered.makeNodeResolver()
@@ -418,7 +418,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function operate_incidentQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       operate_incident,
       defered.makeNodeResolver()
@@ -427,7 +427,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function operate_environmentQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       operate_environment,
       defered.makeNodeResolver()
@@ -436,7 +436,7 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function operate_operationalQ() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(
       operate_operational,
       defered.makeNodeResolver()
@@ -445,366 +445,366 @@ router.get("/reportPdf_re", function (req, res, next) {
   }
 
   function governance_strategy0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_strategy0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_strategy25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_strategy25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_strategy50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_strategy50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_strategy1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_strategy1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_policy0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_policy0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_policy25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_policy25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_policy50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_policy50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_policy1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_policy1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_education0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_education0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_education25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_education25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_education50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_education50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function governance_education1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(governance_education1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_security0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_security0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_security25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_security25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_security50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_security50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_security1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_security1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_secure_arch0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_secure_arch0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_secure_arch25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_secure_arch25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_secure_arch50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_secure_arch50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_secure_arch1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_secure_arch1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_threat0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_threat0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_threat25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_threat25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_threat50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_threat50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function design_threat1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(design_threat1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_build0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_build0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_build25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_build25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_build50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_build50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_build1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_build1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_deploy0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_deploy0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_deploy25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_deploy25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_deploy50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_deploy50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_secure_deploy1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_secure_deploy1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_defect0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_defect0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_defect25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_defect25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_defect50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_defect50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function implement_defect1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(implement_defect1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_arch0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_arch0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_arch25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_arch25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_arch50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_arch50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_arch1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_arch1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_requirement0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_requirement0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_requirement25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_requirement25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_requirement50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_requirement50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_requirement1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_requirement1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_security0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_security0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_security25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_security25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_security50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_security50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function verify_security1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(verify_security1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_incident0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_incident0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_incident25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_incident25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_incident50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_incident50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_incident1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_incident1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_environment0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_environment0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_environment25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_environment25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_environment50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_environment50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_environment1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_environment1, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_operational0Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_operational0, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_operational25Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_operational25, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_operational50Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_operational50, defered.makeNodeResolver());
     return defered.promise;
   }
 
   function operate_operational1Q() {
-    const defered = Q.defer();
+    const defered = q.defer();
     db.query(operate_operational1, defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([SQLQ(), governance_strategyQ(), governance_policyQ(), governance_educationQ(),
+  q.all([SQLQ(), governance_strategyQ(), governance_policyQ(), governance_educationQ(),
     design_securityQ(), design_secure_archQ(), design_threatQ(), implement_secure_buildQ(),
     implement_secure_deployQ(), implement_defectQ(), verify_archQ(), verify_requirementQ(),
     verify_securityQ(), operate_incidentQ(), operate_environmentQ(), operate_operationalQ(),
@@ -852,7 +852,7 @@ router.get("/reportPdf_re", function (req, res, next) {
     }
     // console.log("Debug:", FirstGraph)
     // console.log(JSON.stringify(results[0][0]));
-    
+
     const SecondGraph = {
       Total0: Total0, Total25: Total25, Total50: Total50, Total1: Total1
     }

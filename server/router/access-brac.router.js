@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 const db=require('../db/config');
 var multer = require('multer');
 var fs = require('fs');
@@ -11,29 +11,29 @@ const spawn = require("child_process").spawn;
 router.get('/bracscores',function(req,res){
   // console.log("hii");
 function fun1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_brac where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun3(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_uam where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun4(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_ur where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
-Q.all([fun1(),fun2(),fun3(),fun4()]).then(function(results){
+q.all([fun1(),fun2(),fun3(),fun4()]).then(function(results){
   govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score+results[3][0][0].score;
   // console.log(govall);
   all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total+results[3][0][0].total;
@@ -50,11 +50,11 @@ router.get('/bracfourvalue',function(req,res){
 
 
 function egfunction(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(score) as score, count(*) as total from  score_history where groupname = 'Access Control' ",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([egfunction()]).then(function(results){
+q.all([egfunction()]).then(function(results){
   score = results[0][0][0].score;
   total = results[0][0][0].total;
 egtotalscore = Math.round((score/total)*100);
@@ -69,50 +69,50 @@ egtotalscore = Math.round((score/total)*100);
 router.get('/bracfirstvalue',function(req,res){
   // console.log("hii");
 function access_brac(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_brac where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function access_sac(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where status!=-1  ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function access_uam(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 function access_ur(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_ur where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as total from  access_brac ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as total from  access_sac  ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun3(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as total from  access_uam ",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun4(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as total from  access_ur ",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([access_brac(),access_sac(),access_uam(),access_ur(),fun1(),fun2(),fun3(),fun4()]).then(function(results){
+q.all([access_brac(),access_sac(),access_uam(),access_ur(),fun1(),fun2(),fun3(),fun4()]).then(function(results){
 
   brac = results[0][0][0].score;
   sac = results[1][0][0].score;
@@ -134,79 +134,79 @@ Q.all([access_brac(),access_sac(),access_uam(),access_ur(),fun1(),fun2(),fun3(),
 router.get('/bracsecondvalue',function(req,res){
   // console.log("hii");
 function brac_1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_brac where compliance_section = 'A.9.1.1-Access control policy' ",defered.makeNodeResolver());
   return defered.promise;
 }
 function brac_2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_brac where compliance_section = 'A.9.1.2-Access to networks and network services'",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function sac_1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where compliance_section = 'A.9.4.1-Information access restriction'",defered.makeNodeResolver());
   return defered.promise;
 }
 function sac_2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where compliance_section = 'A.9.4.2-Secure log-on procedures'",defered.makeNodeResolver());
   return defered.promise;
 }
 function sac_3(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where compliance_section = 'A.9.4.3-Password management system'",defered.makeNodeResolver());
   return defered.promise;
 }
 function sac_4(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where compliance_section = 'A.9.4.4-Use of privileged utility programs'",defered.makeNodeResolver());
   return defered.promise;
 }
 function sac_5(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_sac where compliance_section = 'A.9.4.5-Access control to program source code'",defered.makeNodeResolver());
   return defered.promise;
 }
 function uam_1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where compliance_section = 'A.9.2.4-Management of secret authentication information of users' ",defered.makeNodeResolver());
   return defered.promise;
 }
 function uam_2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where compliance_section = 'A.9.2.5-Review of user access rights' ",defered.makeNodeResolver());
   return defered.promise;
 }
 function uam_3(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where compliance_section = 'A.9.2.6-Removal or adjustment of access rights' ",defered.makeNodeResolver());
   return defered.promise;
 }
 function uam_4(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where compliance_section = 'A.9.2.1-User registration and de-registration' ",defered.makeNodeResolver());
   return defered.promise;
 }
 function uam_5(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where compliance_section = 'A.9.2.2-User access provisioning' ",defered.makeNodeResolver());
   return defered.promise;
 }
 function uam_6(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from access_uam where compliance_section = 'A.9.2.3-Management of privileged access rights' ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function ur_1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  access_ur where compliance_section = 'A.9.3.1-Use of secret authentication information' ",defered.makeNodeResolver());
   return defered.promise;
 }
 
-Q.all([brac_1(),brac_2(),sac_1(),sac_2(),sac_3(),sac_4(),sac_5(),uam_1(),uam_2(),uam_3(),uam_4(),uam_5(),uam_6(),ur_1()]).then(function(results){
+q.all([brac_1(),brac_2(),sac_1(),sac_2(),sac_3(),sac_4(),sac_5(),uam_1(),uam_2(),uam_3(),uam_4(),uam_5(),uam_6(),ur_1()]).then(function(results){
 
   brac1 = results[0][0][0].score;
   brac2 = results[1][0][0].score;
@@ -233,47 +233,47 @@ Q.all([brac_1(),brac_2(),sac_1(),sac_2(),sac_3(),sac_4(),sac_5(),uam_1(),uam_2()
  router.get('/bracthirdvalue',function(req,res){
       // console.log("hii");
       function brac_yes(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_brac  where status = 1  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function brac_no(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_brac  where status = 0  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function sac_yes(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_sac  where status = 1  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function sac_no(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_sac  where status = 0  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function uam_yes(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_uam  where status = 1  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function uam_no(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_uam  where status = 0  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function ur_yes(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_ur  where status = 1  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function ur_no(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from access_ur  where status = 0  ",defered.makeNodeResolver());
         return defered.promise;
       }
 
-      Q.all([brac_yes(),brac_no(),sac_yes(),sac_no(),uam_yes(),uam_no(),ur_yes(),ur_no()]).then(function(results){
+      q.all([brac_yes(),brac_no(),sac_yes(),sac_no(),uam_yes(),uam_no(),ur_yes(),ur_no()]).then(function(results){
 
         brac_yes = (results[0][0][0].score/10);
         brac_no = (results[1][0][0].score/10);
@@ -291,11 +291,11 @@ Q.all([brac_1(),brac_2(),sac_1(),sac_2(),sac_3(),sac_4(),sac_5(),uam_1(),uam_2()
 /***********************************************  ACCESS-BRAC  **********************************/
 router.get('/bracalltable',function(req,res){
   function vsamm(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT * FROM access_brac  ORDER BY iso_id ASC",defered.makeNodeResolver());
     return defered.promise;
   }
-  Q.all([vsamm()]).then(function(results){
+  q.all([vsamm()]).then(function(results){
     all = results[0][0];
     res.json({success:true, "all": all});
   });
@@ -410,18 +410,18 @@ router.post("/bracuploadreg_db",function(req,res){
       //console.log(sql);
       function doQuery_tab()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("UPDATE `access_brac` SET `upload`='upload/',filename=IF(`filename`!='',concat(filename,', "+req.body.files+"'),filename ),filename=IF(`filename`='',concat(filename,'"+req.body.files+"'),filename ) WHERE id='"+req.body.id+"'",defered.makeNodeResolver());
           return defered.promise;
       }
       function doQuery_upload()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("INSERT INTO `uploads`(`id`, `filename`, `groupname`, `secpractice`,`qoid`) VALUES ('','"+req.body.files+"','"+req.body.groupname+"','"+req.body.secpractice+"','"+req.body.id+"')",defered.makeNodeResolver());
           return defered.promise;
       }
   }
- Q.all([ doQuery_tab(),doQuery_upload()
+ q.all([ doQuery_tab(),doQuery_upload()
   ]).then(function(results)
   {
 
@@ -437,11 +437,11 @@ router.post("/bracuploadreg_db",function(req,res){
 /***********************************************  ACCESS-UAM  **********************************/
 router.get('/uamalltable',function(req,res){
   function vsamm(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT * FROM access_uam  ORDER BY iso_id ASC",defered.makeNodeResolver());
     return defered.promise;
   }
-  Q.all([vsamm()]).then(function(results){
+  q.all([vsamm()]).then(function(results){
     all = results[0][0];
     res.json({success:true, "all": all});
   });
@@ -743,11 +743,11 @@ else if(req.body.groupname=="Compliance" && req.body.secpractice=="Information s
 
 router.get('/sacalltable',function(req,res){
   function vsamm(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT * FROM access_sac  ORDER BY iso_id ASC",defered.makeNodeResolver());
     return defered.promise;
   }
-  Q.all([vsamm()]).then(function(results){
+  q.all([vsamm()]).then(function(results){
     all = results[0][0];
     res.json({success:true, "all": all});
   });
@@ -868,13 +868,13 @@ router.post("/sacuploadreg_db",function(req,res){
 
       function doQuery_tab()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("UPDATE `access_sac` SET `upload`='upload/',filename=IF(`filename`!='',concat(filename,', "+req.body.files+"'),filename ),filename=IF(`filename`='',concat(filename,'"+req.body.files+"'),filename ) WHERE id='"+req.body.id+"'",defered.makeNodeResolver());
           return defered.promise;
       }
 
   }
- Q.all([ doQuery_tab()]).then(function(results)
+ q.all([ doQuery_tab()]).then(function(results)
   {
 
       res.json({success:true});
@@ -885,11 +885,11 @@ router.post("/sacuploadreg_db",function(req,res){
 /*************************************************************   ASSET-UR ************************************************/
 router.get('/uralltable',function(req,res){
   function vsamm(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT * FROM access_ur  ORDER BY iso_id ASC",defered.makeNodeResolver());
     return defered.promise;
   }
-  Q.all([vsamm()]).then(function(results){
+  q.all([vsamm()]).then(function(results){
     all = results[0][0];
     res.json({success:true, "all": all});
   });
@@ -998,18 +998,18 @@ router.post("/uruploadreg_db",function(req,res){
 
       function doQuery_tab()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("UPDATE `access_ur` SET `upload`='upload/',filename=IF(`filename`!='',concat(filename,', "+req.body.files+"'),filename ),filename=IF(`filename`='',concat(filename,'"+req.body.files+"'),filename ) WHERE id='"+req.body.id+"'",defered.makeNodeResolver());
           return defered.promise;
       }
       function doQuery_upload()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("INSERT INTO `uploads`(`id`, `filename`, `groupname`, `secpractice`,`qoid`) VALUES ('','"+req.body.files+"','"+req.body.groupname+"','"+req.body.secpractice+"','"+req.body.id+"')",defered.makeNodeResolver());
           return defered.promise;
       }
   }
- Q.all([ doQuery_tab(),doQuery_upload()
+ q.all([ doQuery_tab(),doQuery_upload()
   ]).then(function(results)
   {
 
@@ -1055,533 +1055,533 @@ var d30 = moment().subtract(29, 'days');
 
     function k1(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW()) and  groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
   }
   function k2(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 1 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
   }
   function k3(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 2 DAY) and  groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function k4(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 3 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function k5(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 4 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function k6() {
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 5 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function k7(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 6 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function k8(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 7 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function k9(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 8 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function k10(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 9 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function k11(){
 
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 10 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
     function k12(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 11 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k13(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 12 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k14(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 13 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k15(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 14 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k16(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 15 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function k17(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 16 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k18(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 17 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;;
     }
     function k19(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 18 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k20(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 19 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k21(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 20 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k22(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 21 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function k23(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 22 DAY)  and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k24(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 23 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k25(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 24 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k26(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 25 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function k27(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 26 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k28(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 27 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k29(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 28 DAY)  and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k30(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count FROM score_history WHERE DATE(created) = DATE(NOW() - INTERVAL 29 DAY) and  groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function k31(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count FROM score_history WHERE groupname= 'Access control' AND MONTH(created) = MONTH(CURRENT_DATE()) AND YEAR(created) = YEAR(CURRENT_DATE())",defered.makeNodeResolver());
       return defered.promise;
     }
     function k32(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count FROM score_history WHERE  score = -1 and groupname= 'Access control' AND MONTH(created) = MONTH(CURRENT_DATE()) AND YEAR(created) = YEAR(CURRENT_DATE())",defered.makeNodeResolver());
       return defered.promise;
     }
     function k33(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count FROM score_history WHERE  score = 1 and groupname= 'Access control' AND MONTH(created) = MONTH(CURRENT_DATE()) AND YEAR(created) = YEAR(CURRENT_DATE())",defered.makeNodeResolver());
       return defered.promise;
     }
     function k34(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score)+10 as count, MONTH(created) FROM score_history WHERE groupname= 'Access control' AND MONTH(created) = MONTH(CURRENT_DATE())-1 AND YEAR(created) = YEAR(CURRENT_DATE()) ",defered.makeNodeResolver());
       return defered.promise;
     }
     function y1(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW()) and  groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
   }
   function y2(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 1 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
   }
   function y3(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 2 DAY) and  groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function y4(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE  score = 1 and DATE(created) = DATE(NOW() - INTERVAL 3 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function y5(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 4 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function y6() {
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 5 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function y7(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and  DATE(created) = DATE(NOW() - INTERVAL 6 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function y8(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 7 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function y9(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 8 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function y10(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and  DATE(created) = DATE(NOW() - INTERVAL 9 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function y11(){
 
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 10 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
     function y12(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 11 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y13(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 12 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y14(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 13 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y15(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and  DATE(created) = DATE(NOW() - INTERVAL 14 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y16(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and  DATE(created) = DATE(NOW() - INTERVAL 15 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function y17(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 16 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y18(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 17 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;;
     }
     function y19(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 18 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y20(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 19 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y21(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 20 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y22(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 21 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function y23(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 22 DAY)  and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y24(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 23 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y25(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 24 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y26(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and  DATE(created) = DATE(NOW() - INTERVAL 25 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function y27(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 26 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y28(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 27 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y29(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = 1 and DATE(created) = DATE(NOW() - INTERVAL 28 DAY)  and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function y30(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count FROM score_history WHERE  score = -1 and DATE(created) = DATE(NOW() - INTERVAL 29 DAY) and  groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n1(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW()) and  groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
   }
   function n2(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 1 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
   }
   function n3(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 2 DAY) and  groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function n4(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE  score = -1 and DATE(created) = DATE(NOW() - INTERVAL 3 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function n5(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 4 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
     return defered.promise;
   }
   function n6() {
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 5 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function n7(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and  DATE(created) = DATE(NOW() - INTERVAL 6 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function n8(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 7 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function n9(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 8 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function n10(){
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and  DATE(created) = DATE(NOW() - INTERVAL 9 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
   function n11(){
 
 
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 10 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
     return defered.promise;
   }
     function n12(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 11 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n13(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 12 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n14(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 13 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n15(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and  DATE(created) = DATE(NOW() - INTERVAL 14 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n16(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and  DATE(created) = DATE(NOW() - INTERVAL 15 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function n17(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 16 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n18(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 17 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;;
     }
     function n19(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 18 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n20(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 19 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n21(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 20 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n22(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 21 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function n23(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 22 DAY)  and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n24(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 23 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n25(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 24 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n26(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and  DATE(created) = DATE(NOW() - INTERVAL 25 DAY) and groupname= 'Access control' ",defered.makeNodeResolver());
       return defered.promise;
     }
     function n27(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 26 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n28(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 27 DAY) and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n29(){
 
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count  FROM score_history WHERE score = -1 and DATE(created) = DATE(NOW() - INTERVAL 28 DAY)  and groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
     function n30(){
-      var defered = Q.defer();
+      var defered = q.defer();
       db.query("SELECT sum(score) as count FROM score_history WHERE  score = -1 and DATE(created) = DATE(NOW() - INTERVAL 29 DAY) and  groupname= 'Access control'",defered.makeNodeResolver());
       return defered.promise;
     }
-    Q.all([ k1(),k2(),k3(),k4(),k5(),k6(),k7(),k8(),k9(),k10(),k11(),k12(),k13(),k14(),k15(),k16(),k17(),k18(),k19(),k20(),k21(),k22(),
+    q.all([ k1(),k2(),k3(),k4(),k5(),k6(),k7(),k8(),k9(),k10(),k11(),k12(),k13(),k14(),k15(),k16(),k17(),k18(),k19(),k20(),k21(),k22(),
     k23(),k24(),k25(),k26(),k27(),k28(),k29(),k30(),k31(),k32(),k33(),k34(),y1(),y2(),y3(),y4(),y5(),y6(),y7(),y8(),y9(),y10(),y11(),y12(),y13(),y14(),y15(),y16(),y17(),y18(),y19(),y20(),y21(),y22(),y23(),y24(),y25(),y26(),y27(),y28(),y29(),y30(),
     n1(),n2(),n3(),n4(),n5(),n6(),n7(),n8(),n9(),n10(),n11(),n12(),n13(),n14(),n15(),n16(),n17(),n18(),n19(),n20(),n21(),n22(),n23(),n24(),n25(),n26(),n27(),n28(),n29(),n30()]).then(function(results){
 

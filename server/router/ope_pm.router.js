@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var Q = require('Q');
+var q = require('q');
 //const ctrlUser = require('../controllers/user.controller');
 var secret = 'harrypotter';
 var nodemailer = require('nodemailer');
@@ -18,45 +18,45 @@ const spawn = require("child_process").spawn;
 router.get('/pmscores',function(req,res){
   // console.log("hii");
 function fun1(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_backup where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun2(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_cos where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun3(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_isac where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun4(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_lm where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun5(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_opr where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function fun6(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_tvm where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
 function fun7(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from  operations_pm where status!=-1",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
+q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
   govall = results[0][0][0].score+results[1][0][0].score+results[2][0][0].score+results[3][0][0].score+results[4][0][0].score+results[5][0][0].score+results[6][0][0].score;
   // console.log(govall);
   all = results[0][0][0].total+results[1][0][0].total+results[2][0][0].total+results[3][0][0].total+results[4][0][0].total+results[5][0][0].total+results[6][0][0].total;
@@ -73,11 +73,11 @@ router.get('/pmsecondgraph',function(req,res){
 
 
 function egfunction(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select sum(status) as score, count(*) as total from operations_pm where status!=-1 ",defered.makeNodeResolver());
   return defered.promise;
 }
-Q.all([egfunction()]).then(function(results){
+q.all([egfunction()]).then(function(results){
   score = results[0][0][0].score;
   total = results[0][0][0].total;
 egtotalscore = Math.round((score/total)*100);
@@ -93,47 +93,47 @@ egtotalscore = Math.round((score/total)*100);
 router.get('/pmfirstvalue',function(req,res){
   // console.log("hii");
   function fun1(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  operations_backup where status!=-1 ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun2(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  operations_cos where status!=-1  ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun3(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from operations_isac where status!=-1 ",defered.makeNodeResolver());
     return defered.promise;
   }
   function fun4(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  operations_lm where status!=-1 ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun5(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from  operations_opr where status!=-1  ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun6(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from operations_pm where status!=-1 ",defered.makeNodeResolver());
     return defered.promise;
   }
 
   function fun7(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("select sum(status) as score, count(*) as total from operations_tvm where status!=-1 ",defered.makeNodeResolver());
     return defered.promise;
   }
 
-  Q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
+  q.all([fun1(),fun2(),fun3(),fun4(),fun5(),fun6(),fun7()]).then(function(results){
 
     strategy_and_metrices = results[0][0][0].score;
     education_and_guidance = results[1][0][0].score;
@@ -160,24 +160,24 @@ $na= mysqli_fetch_object($query_na); */
 router.get('/pmsecondvalue',function(req,res){
   // console.log("hii");
 function eg_yes(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as score from operations_pm where status = 1  ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function eg_half(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as score from operations_pm where status = 0.5  ",defered.makeNodeResolver());
   return defered.promise;
 }
 
 function eg_no(){
-  var defered = Q.defer();
+  var defered = q.defer();
   db.query("select count(*) as score from operations_pm where status = 0 ",defered.makeNodeResolver());
   return defered.promise;
 }
 
-Q.all([eg_yes(),eg_half(),eg_no()]).then(function(results){
+q.all([eg_yes(),eg_half(),eg_no()]).then(function(results){
 
  eg_yes1 = results[0][0][0].score;
  eg_half1 = results[1][0][0].score;;
@@ -197,17 +197,17 @@ Q.all([eg_yes(),eg_half(),eg_no()]).then(function(results){
      router.get('/pmthirdvalue',function(req,res){
       // console.log("hii");
       function rf_yes(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from operations_pm where status=1  ",defered.makeNodeResolver());
         return defered.promise;
       }
       function rf_no(){
-        var defered = Q.defer();
+        var defered = q.defer();
         db.query("select count(*) as score from operations_pm where status=0  ",defered.makeNodeResolver());
         return defered.promise;
       }
 
-      Q.all([rf_yes(),rf_no()]).then(function(results){
+      q.all([rf_yes(),rf_no()]).then(function(results){
 
         rf_yes = results[0][0][0].score;
         rf_no = results[1][0][0].score;
@@ -221,11 +221,11 @@ Q.all([eg_yes(),eg_half(),eg_no()]).then(function(results){
 /**********************************************TABLE GOV ***************************************/
 router.get('/pmalltable',function(req,res){
   function vsamm(){
-    var defered = Q.defer();
+    var defered = q.defer();
     db.query("SELECT * FROM operations_pm ORDER BY iso_id ASC",defered.makeNodeResolver());
     return defered.promise;
   }
-  Q.all([vsamm()]).then(function(results){
+  q.all([vsamm()]).then(function(results){
     all = results[0][0];
     res.json({success:true, "all": all});
   });
@@ -423,18 +423,18 @@ router.post("/pmuploadreg_db",function(req,res){
       //console.log(sql);
       function doQuery_tab()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("UPDATE `operations_pm` SET `upload`='upload/',filename=IF(`filename`!='',concat(filename,', "+req.body.files+"'),filename ),filename=IF(`filename`='',concat(filename,'"+req.body.files+"'),filename ) WHERE iso_id='"+req.body.id+"'",defered.makeNodeResolver());
           return defered.promise;
       }
       function doQuery_upload()
       {
-          var defered = Q.defer();
+          var defered = q.defer();
           db.query("INSERT INTO `uploads`(`id`, `filename`, `groupname`, `secpractice`,`qoid`) VALUES ('','"+req.body.files+"','"+req.body.groupname+"','"+req.body.secpractice+"','"+req.body.id+"')",defered.makeNodeResolver());
           return defered.promise;
       }
   }
- Q.all([ doQuery_tab(),doQuery_upload()
+ q.all([ doQuery_tab(),doQuery_upload()
   ]).then(function(results)
   {
 
