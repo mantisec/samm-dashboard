@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql:5.7-debian
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=samm
+      - MYSQL_USER=samm
+      - MYSQL_DATABASE=samm
+    ports:
+      - 3306:3306
+    volumes:
+      - ./local_storage/mysql/data:/var/lib/mysql:rw
+      - ./database/samm.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+  server:
+    image: samm-server:latest
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - APP_SECRET=sammysecret
+      - DB_HOST=mysql
+      - DB_PASS=samm
+      - DB_USER=samm
+      - DB_NAME=samm
+    ports:
+      - 3000:3000

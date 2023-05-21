@@ -1,5 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
-
+# local data from docker-compose
+/local_storage
 # compiled output
 /dist
 /tmp

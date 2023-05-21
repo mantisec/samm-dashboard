@@ -1,3 +1,4 @@
+const env = require('../config/env')
 const express = require('express')
 const users = express.Router()
 const cors = require('cors')
@@ -5,8 +6,6 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
 users.use(cors())
-
-process.env.SECRET_KEY = 'secret'
 
 users.post('/register', (req, res) => {
   if (err) {
@@ -33,7 +32,7 @@ users.post('/register', (req, res) => {
       if (!user) {
         User.create(userData)
           .then(user => {
-            let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+            let token = jwt.sign(user.dataValues, env.APP_SECRET, {
               expiresIn: 1440
             })
             res.json({ token: token })
