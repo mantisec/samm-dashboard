@@ -13,16 +13,32 @@ services:
     volumes:
       - ./local_storage/mysql/data:/var/lib/mysql:rw
       - ./database/samm.sql:/docker-entrypoint-initdb.d/schema.sql:ro
-  server:
-    image: samm-server:latest
+  api-server:
+    image: samm-api-server:latest
     build:
-      context: ./server
+      context: ./api-server
       dockerfile: Dockerfile
     environment:
       - APP_SECRET=sammysecret
+      - APP_PORT=3000
       - DB_HOST=mysql
       - DB_PASS=samm
       - DB_USER=samm
       - DB_NAME=samm
     ports:
       - 3000:3000
+  auth-server:
+    image: samm-auth-server:latest
+    build:
+      context: ./auth-server
+      dockerfile: Dockerfile
+    environment:
+      - APP_SECRET=sammysecret
+      - APP_PORT=8000
+      - API_SERVER_URI=http://api-server:3000
+      - DB_HOST=mysql
+      - DB_PASS=samm
+      - DB_USER=samm
+      - DB_NAME=samm
+    ports:
+      - 8000:8000

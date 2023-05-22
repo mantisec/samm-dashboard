@@ -1,3 +1,4 @@
+var env = require('./app/config/env')
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -16,7 +17,7 @@ db.sequelize.sync({ force: false , alter : true }).then(() => {
 });
 
 // Create a Server
-var server = app.listen(8080, function () {
+var server = app.listen(env.app_port, function () {
 
 	var host = server.address().address
 	var port = server.address().port

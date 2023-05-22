@@ -1,3 +1,4 @@
+var env = require('./config/env')
 var express = require('express');
 var app = express();
 var db=require('./db/config');
@@ -24,7 +25,6 @@ app.use(cors());
 app.use('/api', rtsIndex ,allscores, report , usermanage, home,vsamm,profile);
 
 // app.use('/api',accuam);
-port = process.env.PORT || 3001;
-app.listen(3000);
+app.listen(env.app_port);
 
-console.log('RESTful API server started on: ' + port);
+console.log('api-server started on: ' + env.app_port);
