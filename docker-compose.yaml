@@ -42,3 +42,10 @@ services:
       - DB_NAME=samm
     ports:
       - 8000:8000
+  fe-server:
+    image: mantisec/samm-fe-server:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
